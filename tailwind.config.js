@@ -2,7 +2,22 @@
 module.exports = {
 	content: ["./App.{js,jsx,ts,tsx}", "./src/**/*.{js,jsx,ts,tsx}", "./src/**/**/*.{js,jsx,ts,tsx}"],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				primary: "#0d253f",
+			},
+			fontFamily: {
+				interThin: ["Inter-Thin", "sans-serif"],
+				interSemiBold: ["Inter-SemiBold", "sans-serif"],
+				interRegular: ["Inter-Regular", "sans-serif"],
+				interMedium: ["Inter-Medium", "sans-serif"],
+				interLight: ["Inter-Light", "sans-serif"],
+				interExtraLight: ["Inter-ExtraLight", "sans-serif"],
+				interExtraBold: ["Inter-ExtraBold", "sans-serif"],
+				interBold: ["Inter-Bold", "sans-serif"],
+				interBlack: ["Inter-Black", "sans-serif"],
+			},
+		},
 	},
 	plugins: [],
 };
