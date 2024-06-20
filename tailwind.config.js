@@ -5,6 +5,8 @@ module.exports = {
 		extend: {
 			colors: {
 				primary: "#0d253f",
+				secondary: "#8acda5",
+				text: "#E0E2E1",
 			},
 			fontFamily: {
 				interThin: ["Inter-Thin", "sans-serif"],

@@ -1520,7 +1520,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/vector-icons@npm:^14.0.0":
+"@expo/vector-icons@npm:^14.0.0, @expo/vector-icons@npm:^14.0.2":
   version: 14.0.2
   resolution: "@expo/vector-icons@npm:14.0.2"
   dependencies:
@@ -9210,6 +9210,7 @@ __metadata:
   resolution: "tmdb-clone@workspace:."
   dependencies:
     "@babel/core": "npm:^7.20.0"
+    "@expo/vector-icons": "npm:^14.0.2"
     "@types/react": "npm:~18.2.45"
     expo: "npm:~51.0.14"
     expo-constants: "npm:~16.0.2"
