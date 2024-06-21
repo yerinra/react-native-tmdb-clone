@@ -1,8 +1,9 @@
 import { FlatList, View } from "react-native";
 import React from "react";
 import MovieCard from "./MovieCard";
-import { Result } from "@/lib/tmdb";
+
 import BackdropMovieCard from "./BackdropMovieCard";
+import { Result } from "@/lib/types";
 
 type HorizontalListProps = {
 	movies: Result[];
