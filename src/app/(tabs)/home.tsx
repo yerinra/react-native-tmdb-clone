@@ -116,11 +116,12 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getMovieList } from "@/lib/tmdb";
+
 import HorizontalList from "@/components/HorizontalList";
 import Empty from "@/components/Empty";
 import { router } from "expo-router";
 import { ListType, Result } from "@/lib/types";
+import { getMovieList } from "@/lib/tmdb";
 
 const Home = () => {
 	const [query, setQuery] = useState("");

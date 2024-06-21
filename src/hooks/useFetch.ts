@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
 import { useEffect, useState } from "react";
-import { MovieListResponse, Result } from "@/lib/tmdb";
+import { Result } from "@/lib/types";
 
 const useFetch = (fn: () => Promise<Result>) => {
 	const [data, setData] = useState<Result | []>([]);
