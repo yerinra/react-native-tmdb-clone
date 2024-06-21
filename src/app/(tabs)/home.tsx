@@ -122,6 +122,7 @@ import Empty from "@/components/Empty";
 import { router } from "expo-router";
 import { ListType, Result } from "@/lib/types";
 import { getMovieList } from "@/lib/tmdb";
+import SearchInput from "@/components/SearchInput";
 
 const Home = () => {
 	const [query, setQuery] = useState("");
@@ -213,7 +214,12 @@ const Home = () => {
 				ListHeaderComponent={() => (
 					<View className="my-6 pl-4 space-y-6">
 						<Text className="font-interSemiBold text-2xl text-white px-1">Home</Text>
-
+						<SearchInput
+							value={query}
+							handleChangeText={() => {}}
+							placeholder="Search for a movie."
+							title="search"
+						/>
 						<View>
 							<Text className="text-white text-lg font-interSemiBold mb-2">Now Playing</Text>
 							<HorizontalList backdrop={true} movies={movies.nowPlaying ?? []} />
