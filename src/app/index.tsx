@@ -38,9 +38,8 @@ export default function App() {
 							isLoading={false}
 						/>
 					</View>
-					<TouchableOpacity></TouchableOpacity>
 				</ScrollView>
-				<StatusBar backgroundColor="#0d253f" style="light" />
+				<StatusBar backgroundColor="#0b101f" style="light" />
 			</SafeAreaView>
 		</Protected>
 	);
