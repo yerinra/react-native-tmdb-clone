@@ -1,10 +1,16 @@
 import { View, Text, Image } from "react-native";
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 
-const MovieCard = ({ movie }) => {
+import { Link } from "expo-router";
+import { Result } from "@/lib/types";
+
+type MovieCardProps = {
+	movie: Result;
+};
+
+const MovieCard = ({ movie }: MovieCardProps) => {
 	return (
-		<View className="mr-[6px]">
+		<Link href={`/movie/${movie.id}`} className="mr-[6px]">
 			<View className="w-[90px] items-center justify-center rounded-lg gap-0.5">
 				<Image
 					src={"https://image.tmdb.org/t/p/w300/" + movie.poster_path}
@@ -13,7 +19,7 @@ const MovieCard = ({ movie }) => {
 				/>
 				<Text className="max-w-[86px] text-[9px] text-white font-interLight">{movie.title}</Text>
 			</View>
-		</View>
+		</Link>
 	);
 };
 
