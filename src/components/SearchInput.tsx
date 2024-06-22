@@ -2,7 +2,7 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
 import { Octicons } from "@expo/vector-icons";
 
-type FormFieldProps = {
+type SearchInputProps = {
 	title: string;
 	value: string;
 	placeholder?: string;
@@ -16,11 +16,14 @@ const SearchInput = ({
 	value,
 	handleChangeText,
 	placeholder,
-	otherStyles,
 	...props
-}: FormFieldProps) => {
+}: SearchInputProps) => {
 	return (
-		<View className="flex-row border-2 border-[#060b17] w-full h-16 px-4 bg-[#060b17] rounded-2xl focus:border-secondary items-center space-x-4 mt-4">
+		<View
+			className={
+				"flex-row border-2 border-[#060b17] w-full h-16 px-4 bg-[#060b17] rounded-2xl focus:border-secondary items-center space-x-4 mt-4"
+			}
+		>
 			<TextInput
 				className="text-base mt-0.5 flex-1 text-white font-interRegular"
 				value={value}
