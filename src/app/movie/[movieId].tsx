@@ -1,35 +1,96 @@
-import {
-	View,
-	Text,
-	FlatList,
-	ImageBackground,
-	Image,
-	ScrollView,
-	TouchableOpacity,
-} from "react-native";
-import React, { useState } from "react";
+import { View, Text, ImageBackground, Image, ScrollView, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HorizontalList from "@/components/HorizontalList";
 import { IMAGE_BASE_URL } from "@/lib/constants";
-import useMovieDetail from "@/hooks/useMovieDetail";
 import Rating from "@/components/Rating";
 import useFetch from "@/hooks/useFetch";
 import { getMovieDetail } from "@/lib/tmdb";
 import { MovieDetail } from "@/lib/types";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+	addFavorite,
+	getCurrentUser,
+	getUserFavoriteForMovie,
+	getUserRatingForMovie,
+	removeFavorite,
+	updateRating,
+} from "@/lib/appwrite";
 
 const Movie = () => {
 	const { movieId } = useLocalSearchParams();
 	const numericMovieId = typeof movieId === "string" ? parseInt(movieId, 10) : undefined;
+	const [isFavorite, setIsFavorite] = useState(false);
 
 	const {
 		data: movie,
 		loading,
 		refetch,
-	} = useFetch<MovieDetail>(() => getMovieDetail(numericMovieId));
+	} = useFetch<MovieDetail>(() => getMovieDetail(numericMovieId as number));
+
+	useEffect(() => {
+		const fetchUserRatingAndFavorite = async () => {
+			try {
+				const user = await getCurrentUser();
+				const userId = user.$id;
+
+				// Fetch user rating
+				const userRating = await getUserRatingForMovie(userId, numericMovieId as number);
+				if (userRating) {
+					setRating(userRating.rating);
+				}
+
+				// Fetch user favorite
+				const userFavorite = await getUserFavoriteForMovie(userId, numericMovieId as number);
+				if (userFavorite) {
+					setIsFavorite(true);
+				} else {
+					setIsFavorite(false);
+				}
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+			}
+		};
+
+		if (numericMovieId) {
+			fetchUserRatingAndFavorite();
+		}
+	}, [numericMovieId]);
+
 	const [rating, setRating] = useState(0);
+
 	if (loading) return <Text>Loading...</Text>;
 	if (!movie) return <Text>There is no movie of {movieId}</Text>;
+
+	const handleRatingChange = async (newRating: number) => {
+		try {
+			const user = await getCurrentUser();
+			console.log("User object:", user); // 로그 추가
+			const userId = user.$id; // user.$id를 사용
+			setRating(newRating);
+			await updateRating(userId, movie, newRating);
+		} catch (error: any) {
+			console.error("Error handling rating change:", error);
+		}
+	};
+
+	const handleToggleFavorite = async () => {
+		try {
+			const user = await getCurrentUser();
+			const userId = user.$id;
+
+			if (isFavorite) {
+				await removeFavorite(userId, numericMovieId as number);
+				setIsFavorite(false);
+			} else {
+				await addFavorite(userId, movie);
+				setIsFavorite(true);
+			}
+		} catch (error: any) {
+			console.error("Error toggling favorite:", error);
+		}
+	};
 
 	return (
 		<SafeAreaView className="flex-1 bg-primary h-full">
@@ -69,12 +130,14 @@ const Movie = () => {
 										{"$" + movie.revenue.toLocaleString()}
 									</Text>
 								</View>
-								<Rating
-									rating={rating}
-									onRatingChange={(newRating: number) => setRating(newRating)}
-								/>
-								<TouchableOpacity className="mt-1 text-primary bg-secondary px-2 py-1 rounded-lg items-center">
-									<Text>Add to Favorites</Text>
+								<Rating rating={rating} onRatingChange={handleRatingChange} />
+								<TouchableOpacity
+									className={`mt-1 px-2 py-1 rounded-lg items-center ${isFavorite ? "bg-gray-600" : "bg-secondary"}`}
+									onPress={handleToggleFavorite}
+								>
+									<Text className="text-white">
+										{isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+									</Text>
 								</TouchableOpacity>
 							</View>
 						</View>

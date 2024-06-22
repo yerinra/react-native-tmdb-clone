@@ -7,6 +7,7 @@ import {
 	ID,
 	Query,
 } from "react-native-appwrite";
+import { MovieDetail } from "./types";
 
 export const config = {
 	endpoint: "https://cloud.appwrite.io/v1",
@@ -86,9 +87,109 @@ export const getCurrentUser = async () => {
 		]);
 
 		if (!currentUser) throw new Error("해당하는 유저가 없습니다.");
-		console.log(currentUser.documents[0]);
 		return currentUser.documents[0];
 	} catch (error: any) {
 		throw new Error(error);
+	}
+};
+
+// 평가 데이터를 업데이트하는 함수
+export const updateRating = async (userId: string, movie: MovieDetail, rating: number) => {
+	const newData = {
+		user: userId, // userId 대신 user.$id를 사용
+		title: movie.title,
+		popularity: movie.popularity,
+		movieId: movie.id,
+		release_date: movie.release_date,
+		vote_average: movie.vote_average,
+		poster_path: movie.poster_path,
+		rating,
+	};
+
+	const documentId = `${userId}-${movie.id}`; // 사용자 ID와 영화 ID를 조합하여 고유한 문서 ID 생성
+	try {
+		await databases.createDocument(
+			config.databaseId,
+			config.ratingCollectionId,
+			documentId,
+			newData,
+		);
+	} catch (error: any) {
+		if (error.code === 409) {
+			await databases.updateDocument(
+				config.databaseId,
+				config.ratingCollectionId,
+				documentId,
+				newData,
+			);
+		} else {
+			console.error("Error updating rating:", error);
+		}
+	}
+};
+
+//
+export const getUserRatingForMovie = async (userId: string, movieId: number) => {
+	try {
+		const response = await databases.listDocuments(config.databaseId, config.ratingCollectionId, [
+			Query.equal("user", userId),
+			Query.equal("movieId", movieId),
+		]);
+
+		if (response.documents.length > 0) {
+			return response.documents[0];
+		}
+
+		return null;
+	} catch (error: any) {
+		console.error("Error fetching user rating for movie:", error);
+		throw error;
+	}
+};
+
+export const addFavorite = async (userId: string, movie: MovieDetail) => {
+	const newData = {
+		user: userId, // user.$id를 사용
+		title: movie.title,
+		popularity: movie.popularity,
+		movieId: movie.id,
+		release_date: movie.release_date,
+		vote_average: movie.vote_average,
+		poster_path: movie.poster_path,
+	};
+
+	const documentId = `${userId}-${movie.id}`; // 사용자 ID와 영화 ID를 조합하여 고유한 문서 ID 생성
+	try {
+		await databases.createDocument(
+			config.databaseId,
+			config.favoriteCollectionId,
+			documentId,
+			newData,
+		);
+	} catch (error: any) {
+		if (error.code !== 409) {
+			console.error("Error adding favorite:", error);
+		}
+	}
+};
+
+export const removeFavorite = async (userId: string, movieId: number) => {
+	const documentId = `${userId}-${movieId}`;
+	try {
+		await databases.deleteDocument(config.databaseId, config.favoriteCollectionId, documentId);
+	} catch (error: any) {
+		console.error("Error removing favorite:", error);
+	}
+};
+
+export const getUserFavoriteForMovie = async (userId: string, movieId: number) => {
+	try {
+		const response = await databases.listDocuments(config.databaseId, config.favoriteCollectionId, [
+			Query.equal("user", userId),
+			Query.equal("movieId", movieId),
+		]);
+		return response.documents.length > 0 ? response.documents[0] : null;
+	} catch (error: any) {
+		console.error("Error fetching user favorite:", error);
 	}
 };

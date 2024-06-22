@@ -4,7 +4,7 @@ import { Models } from "react-native-appwrite";
 type User = Models.Document | null;
 type UserState = {
 	isLoggedIn: boolean;
-	user: User;
+	user: string | null;
 };
 
 const initialState: UserState = {
@@ -16,7 +16,7 @@ const userSlice = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
-		setUser: (state, action: PayloadAction<User>) => {
+		setUser: (state, action: PayloadAction<string>) => {
 			state.user = action.payload;
 			state.isLoggedIn = true;
 		},
