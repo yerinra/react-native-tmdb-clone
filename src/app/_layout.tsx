@@ -33,6 +33,18 @@ const RootLayout = () => {
 				<Stack.Screen name="(auth)" options={{ headerShown: false }} />
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 				{/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }} /> */}
+				<Stack.Screen name="curated/[options]" />
+				<Stack.Screen
+					name="movie/[movieId]"
+					options={{
+						headerTransparent: true,
+						headerStyle: {
+							backgroundColor: "rgba(11, 16, 31, 0.9)",
+						},
+						headerTintColor: "white",
+						headerTitle: "",
+					}}
+				/>
 			</Stack>
 		</Provider>
 	);
