@@ -2,10 +2,10 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 
 import { Link } from "expo-router";
-import { Result } from "@/lib/types";
+import { Recommendation, Result } from "@/lib/types";
 
 type MovieCardProps = {
-	movie: Result;
+	movie: Result | Recommendation;
 };
 
 const MovieCard = ({ movie }: MovieCardProps) => {
