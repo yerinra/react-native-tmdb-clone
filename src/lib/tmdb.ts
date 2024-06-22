@@ -35,6 +35,7 @@ export const getMovieList = async (type: ListType, page = 1) => {
 export const getMovieDetail = async (movieId: number) => {
 	const params = {
 		language: "en-US",
+		append_to_response: "credits,videos,recommendations",
 	};
 
 	const response = await axios.get(BASE_URL + movieId, { params, headers });
