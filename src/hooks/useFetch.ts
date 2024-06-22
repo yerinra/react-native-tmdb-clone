@@ -1,9 +1,8 @@
 import { Alert } from "react-native";
 import { useEffect, useState } from "react";
-import { MovieDetail, Result } from "@/lib/types";
 
-const useFetch = (fn: () => Promise<Result | MovieDetail>) => {
-	const [data, setData] = useState<Result | MovieDetail | []>([]);
+const useFetch = <T>(fn: () => Promise<T>) => {
+	const [data, setData] = useState<T | null>(null);
 	const [loading, setLoading] = useState(true);
 
 	const fetchData = async () => {
