@@ -97,14 +97,14 @@ const Home = () => {
 							</Link>
 						</View>
 						<View className="">
-							<HorizontalList movies={item.movies ?? []} />
+							<HorizontalList type="default" movies={item.movies ?? []} />
 						</View>
 					</View>
 				)}
 				ListHeaderComponent={() => (
 					<View className="my-6 pl-4 space-y-6">
 						<View className="pr-4">
-							<Text className="font-Black text-3xl text-secondary px-1 tracking-widest">TMDB</Text>
+							<Text className="font-Black text-xl text-secondary px-1 tracking-widest">TMDB</Text>
 							<SearchInput
 								value={query}
 								handleChangeText={() => {}}
