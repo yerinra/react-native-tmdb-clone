@@ -15,12 +15,10 @@ export const searchByKeyword = async (keyword: string, page = 1): Promise<MovieL
 		query: keyword,
 		include_adult: false,
 		language: "en-US",
+		page,
 	};
 
-	const response = await axios.get(SEARCH_URL, {
-		params,
-		headers,
-	});
+	const response = await axios.get(SEARCH_URL, { params, headers });
 	return response.data.results;
 };
 
@@ -29,10 +27,16 @@ export const getMovieList = async (type: ListType, page = 1) => {
 		language: "en-US",
 		page,
 	};
-	const response = await axios.get(BASE_URL + type, {
-		params,
-		headers,
-	});
+	const response = await axios.get(BASE_URL + type, { params, headers });
 
 	return response.data.results;
+};
+
+export const getMovieDetail = async (movieId: number) => {
+	const params = {
+		language: "en-US",
+	};
+
+	const response = await axios.get(BASE_URL + movieId, { params, headers });
+	return response.data;
 };
