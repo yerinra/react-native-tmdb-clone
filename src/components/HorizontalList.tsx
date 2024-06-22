@@ -1,44 +1,9 @@
-// import { FlatList, View } from "react-native";
-// import React from "react";
-// import MovieCard from "./MovieCard";
-
-// import BackdropMovieCard from "./BackdropMovieCard";
-// import { Cast, Recommendation, Result, Video } from "@/lib/types";
-
-// type HorizontalListProps = {
-// 	movies: any[];
-// 	type : 'backdrop' | 'trailer' | 'cast' | 'default'
-// };
-
-// const HorizontalList = ({ movies, type }: HorizontalListProps) => {
-// 	return (
-// 		<View>
-// 			<FlatList
-// 				data={movies}
-// 				keyExtractor={(item) => String(item.id)}
-// 				renderItem={({ item }) =>
-// 					// backdrop ? <BackdropMovieCard movie={item} /> : <MovieCard movie={item} />
-// 				{
-// 					switch(type) {
-// 						case 'default' : <MovieCard movie={item} />;
-
-// 						case ''
-// 					}
-// 				}
-// 				}
-// 				horizontal
-// 			/>
-// 		</View>
-// 	);
-// };
-
-// export default HorizontalList;
-
 import { FlatList, Text, View } from "react-native";
 import React from "react";
 import MovieCard from "./MovieCard";
 import BackdropMovieCard from "./BackdropMovieCard";
-import { Cast, Recommendation, Result, Video } from "@/lib/types";
+import CastCard from "./CastCard";
+import TrailerCard from "./TrailerCard";
 
 type HorizontalListProps = {
 	movies: any[];
@@ -51,10 +16,9 @@ const HorizontalList = ({ movies, type }: HorizontalListProps) => {
 			case "backdrop":
 				return <BackdropMovieCard movie={item} />;
 			case "trailer":
-				return <Text className="text-red-500">trailer</Text>;
+				return <TrailerCard video={item} />;
 			case "cast":
-				// Implement cast rendering logic
-				return <Text className="text-red-500">cast</Text>;
+				return <CastCard cast={item} />;
 			case "default":
 			case "recommendations":
 			default:
