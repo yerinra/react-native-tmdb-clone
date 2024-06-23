@@ -2,13 +2,13 @@ import { View, Text, ImageBackground, Image, ScrollView, TouchableOpacity } from
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAppSelector } from "@/redux/hooks";
+
 import HorizontalList from "@/components/HorizontalList";
 import { IMAGE_BASE_URL } from "@/lib/constants";
 import Rating from "@/components/Rating";
 import useFetch from "@/hooks/useFetch";
 import { getMovieDetail } from "@/lib/tmdb";
-import { MovieDetail } from "@/lib/types";
-import { useAppSelector } from "@/redux/hooks";
 import {
 	addFavorite,
 	getUserFavoriteForMovie,
@@ -18,11 +18,15 @@ import {
 } from "@/lib/appwrite";
 import Loading from "@/components/Loading";
 import Empty from "@/components/Empty";
+import type { MovieDetail } from "@/lib/types";
 
 const Movie = () => {
 	const { movieId } = useLocalSearchParams();
 	const numericMovieId = typeof movieId === "string" ? parseInt(movieId, 10) : undefined;
+
 	const [isFavorite, setIsFavorite] = useState(false);
+	const [ratingAndFavoriteLoading, setRatingAndFavoriteLoading] = useState(true);
+	const [rating, setRating] = useState(0);
 	const { user } = useAppSelector((state) => state.user);
 
 	const {
@@ -30,22 +34,22 @@ const Movie = () => {
 		loading,
 		refetch,
 	} = useFetch<MovieDetail>(() => getMovieDetail(numericMovieId as number));
-	const [ratingAndFavoriteLoading, setRatingAndFavoriteLoading] = useState(true);
+
 	useEffect(() => {
 		const fetchUserRatingAndFavorite = async () => {
 			try {
-				if (!user) return; // Handle case where user is null
+				if (!user) return;
 				const userId = user.$id;
-
-				// Fetch user rating
 				const userRating = await getUserRatingForMovie(userId, numericMovieId as number);
+
 				if (userRating) {
 					setRating(userRating.rating);
 				}
 
-				// Fetch user favorite
 				setRatingAndFavoriteLoading(true);
+
 				const userFavorite = await getUserFavoriteForMovie(userId, numericMovieId as number);
+
 				setIsFavorite(!!userFavorite);
 			} catch (error) {
 				console.error("Error fetching user data:", error);
@@ -58,8 +62,6 @@ const Movie = () => {
 			fetchUserRatingAndFavorite();
 		}
 	}, [numericMovieId]);
-
-	const [rating, setRating] = useState(0);
 
 	if (loading && ratingAndFavoriteLoading) return <Loading />;
 	if (!movie) return <Empty title="No Movie Found." desc="Please try again." showButton />;

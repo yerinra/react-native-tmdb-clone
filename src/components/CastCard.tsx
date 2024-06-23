@@ -1,6 +1,5 @@
 import { View, Text, Image } from "react-native";
 import React from "react";
-import { Cast } from "@/lib/types";
 
 type CastCardProps = {
 	cast: any;

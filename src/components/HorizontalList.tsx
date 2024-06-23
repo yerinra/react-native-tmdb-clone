@@ -1,4 +1,4 @@
-import { FlatList, Text, View } from "react-native";
+import { FlatList, View } from "react-native";
 import React from "react";
 import MovieCard from "./MovieCard";
 import BackdropMovieCard from "./BackdropMovieCard";

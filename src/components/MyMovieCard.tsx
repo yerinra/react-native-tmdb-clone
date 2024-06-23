@@ -3,9 +3,8 @@ import React from "react";
 import { Models } from "react-native-appwrite";
 
 import { Link } from "expo-router";
-import { IMAGE_BASE_URL } from "@/lib/constants";
+import { IMAGE_BASE_URL, SECONDARY_COLOR } from "@/lib/constants";
 import { Octicons } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 type MyMovieCardProps = {
 	movie: Models.Document;
@@ -14,7 +13,7 @@ type MyMovieCardProps = {
 
 const MyMovieCard = ({ movie, rating }: MyMovieCardProps) => {
 	return (
-		<Link href={`/movie/${movie.movieId}`} className="">
+		<Link href={`/movie/${movie.movieId}`}>
 			<View className="flex-row justify-center rounded-lg gap-x-3 gap-y-5 max-w-[90vh]">
 				{movie.poster_path ? (
 					<Image
@@ -35,7 +34,7 @@ const MyMovieCard = ({ movie, rating }: MyMovieCardProps) => {
 					</Text>
 					{rating && (
 						<View className="flex-row justify-center gap-x-2 mt-5">
-							<Octicons name="star-fill" color="#8acda5" size={18} />
+							<Octicons name="star-fill" color={SECONDARY_COLOR} size={18} />
 
 							<Text className="text-secondary font-interSemiBold text-xs">
 								{movie.rating.toFixed(1)}

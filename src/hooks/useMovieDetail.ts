@@ -15,6 +15,7 @@ const useMovieDetail = (movieId: number) => {
 				language: "en-US",
 				append_to_response: "videos,recommendations,credits",
 			};
+
 			const response = await axios.get<MovieDetail>(BASE_URL + movieId, { params, headers });
 			setMovie(response.data);
 

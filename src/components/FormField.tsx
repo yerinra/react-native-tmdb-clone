@@ -16,7 +16,6 @@ const FormField = ({
 	handleChangeText,
 	placeholder,
 	otherStyles,
-	...props
 }: FormFieldProps) => {
 	return (
 		<View className={`space-y-2 ${otherStyles}`}>

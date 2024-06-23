@@ -7,6 +7,7 @@ import {
 	ID,
 	Query,
 } from "react-native-appwrite";
+
 import { MovieDetail } from "./types";
 
 export const config = {
@@ -19,7 +20,6 @@ export const config = {
 	ratingCollectionId: "6674f9740026cda2ee1e",
 };
 
-// Init your React Native SDK
 const client = new Client();
 
 client
@@ -31,19 +31,24 @@ const account = new Account(client);
 const avatars = new Avatars(client);
 const databases = new Databases(client);
 
+// 회원가입 시 유저 생성 및 로그인
 export const createUser = async (email: string, password: string, username: string) => {
 	try {
 		const newAccount = await account.create(ID.unique(), email, password, username);
+
 		if (!newAccount) throw Error;
+
 		const avatarUrl = avatars.getInitials(username);
 
 		await signIn(email, password);
+
 		const newUser = databases.createDocument(
 			config.databaseId,
 			config.userCollectionId,
 			ID.unique(),
 			{ accountId: newAccount.$id, email, username, avatar: avatarUrl },
 		);
+
 		return newUser;
 	} catch (error: any) {
 		if (error instanceof AppwriteException) {
@@ -98,7 +103,7 @@ export const getCurrentUser = async () => {
 // 평가 데이터를 업데이트하는 함수
 export const updateRating = async (userId: string, movie: MovieDetail, rating: number) => {
 	const newData = {
-		user: userId, // userId 대신 user.$id를 사용
+		user: userId, // userId 대신 user.$id를 사용(user documentId)
 		title: movie.title,
 		popularity: movie.popularity,
 		movieId: movie.id,
@@ -108,7 +113,8 @@ export const updateRating = async (userId: string, movie: MovieDetail, rating: n
 		rating,
 	};
 
-	const documentId = `${userId}-${movie.id}`; // 사용자 ID와 영화 ID를 조합하여 고유한 문서 ID 생성
+	const documentId = `${userId}-${movie.id}`;
+
 	try {
 		if (rating == 0) {
 			await databases.deleteDocument(config.databaseId, config.ratingCollectionId, documentId);
@@ -133,7 +139,7 @@ export const updateRating = async (userId: string, movie: MovieDetail, rating: n
 	}
 };
 
-//
+// 영화에 대한 평가 정보 받아오기
 export const getUserRatingForMovie = async (userId: string, movieId: number) => {
 	try {
 		const response = await databases.listDocuments(config.databaseId, config.ratingCollectionId, [
@@ -152,6 +158,7 @@ export const getUserRatingForMovie = async (userId: string, movieId: number) => 
 	}
 };
 
+// 즐겨찾기에 추가
 export const addFavorite = async (userId: string, movie: MovieDetail) => {
 	const newData = {
 		user: userId, // user.$id를 사용
@@ -163,7 +170,8 @@ export const addFavorite = async (userId: string, movie: MovieDetail) => {
 		poster_path: movie.poster_path,
 	};
 
-	const documentId = `${userId}-${movie.id}`; // 사용자 ID와 영화 ID를 조합하여 고유한 문서 ID 생성
+	const documentId = `${userId}-${movie.id}`;
+
 	try {
 		await databases.createDocument(
 			config.databaseId,
@@ -178,8 +186,10 @@ export const addFavorite = async (userId: string, movie: MovieDetail) => {
 	}
 };
 
+// 즐겨찾기 취소
 export const removeFavorite = async (userId: string, movieId: number) => {
 	const documentId = `${userId}-${movieId}`;
+
 	try {
 		await databases.deleteDocument(config.databaseId, config.favoriteCollectionId, documentId);
 	} catch (error: any) {
@@ -187,6 +197,7 @@ export const removeFavorite = async (userId: string, movieId: number) => {
 	}
 };
 
+// 영화를 즐겨찾기 했는지 여부를 받아오기
 export const getUserFavoriteForMovie = async (userId: string, movieId: number) => {
 	try {
 		const response = await databases.listDocuments(config.databaseId, config.favoriteCollectionId, [
@@ -199,6 +210,7 @@ export const getUserFavoriteForMovie = async (userId: string, movieId: number) =
 	}
 };
 
+// 평가한 영화 목록 받아오기
 export const getAllUserRatings = async (userId: string) => {
 	try {
 		const response = await databases.listDocuments(config.databaseId, config.ratingCollectionId, [
@@ -211,6 +223,7 @@ export const getAllUserRatings = async (userId: string) => {
 	}
 };
 
+// 즐겨찾기 영화 목록 받아오기
 export const getAllUserFavorites = async (userId: string) => {
 	try {
 		const response = await databases.listDocuments(config.databaseId, config.favoriteCollectionId, [

@@ -31,15 +31,12 @@ const Search = () => {
 				keyExtractor={(item, kdx) => String(item.id) + kdx}
 				renderItem={({ item }) => <MovieCard grid movie={item} />}
 				ListHeaderComponent={() => (
-					<>
-						<View className="flex my-6 px-4">
-							<Text className=" text-gray-100 text-2xl">Search Results</Text>
-
-							<View className="mt-3 mb-6">
-								<SearchInput initialQuery={query as string} />
-							</View>
+					<View className="flex my-6 px-4">
+						<Text className=" text-gray-100 text-2xl">Search Results</Text>
+						<View className="mt-3 mb-6">
+							<SearchInput initialQuery={query as string} />
 						</View>
-					</>
+					</View>
 				)}
 				ListEmptyComponent={() => (
 					<Empty
