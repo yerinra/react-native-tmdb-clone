@@ -10,7 +10,7 @@ export const headers = {
 		"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjY2Q0MGFlNjU2MzdjZGE4MjAzMTExNzFiNTY1YWY5MSIsInN1YiI6IjY2NzUzMWFlOTQwMGU3NmExYzZjNzgzZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Aw25tHUNHu55thGrhHaw45VrtpqRPlIF3Q2njSKcRJw",
 };
 
-export const searchByKeyword = async (keyword: string, page = 1): Promise<MovieListResponse> => {
+export const searchByKeyword = async (keyword: string, page = 1) => {
 	const params = {
 		query: keyword,
 		include_adult: false,
