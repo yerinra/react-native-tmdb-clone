@@ -4,9 +4,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
-import { createUser } from "@/lib/appwrite";
+import { createUser, signOut } from "@/lib/appwrite";
 import { useAppDispatch } from "@/redux/hooks";
-import { clearUser } from "@/redux/slice/userSlice";
+import { clearUser, setUser } from "@/redux/slice/userSlice";
 
 const SignUp = () => {
 	const dispatch = useAppDispatch();
@@ -21,12 +21,13 @@ const SignUp = () => {
 		setIsSubmitting(true);
 
 		try {
-			await createUser(form.email, form.password, form.username);
-
+			const res = await createUser(form.email, form.password, form.username);
+			dispatch(setUser(res));
 			router.replace("/home");
 		} catch (error: any) {
 			Alert.alert("Error", error.message);
 			dispatch(clearUser());
+			await signOut();
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -37,7 +38,7 @@ const SignUp = () => {
 			<ScrollView>
 				<View className="w-full justify-center min-h-[90vh] px-4 my-6">
 					<Text className="text-4xl font-interBlack text-secondary">TMDB</Text>
-					<Text className="text-2xl font-interSemiBold text-white">Sign up for an account.</Text>
+					<Text className="text-xl font-interSemiBold text-white">Sign up for an account.</Text>
 					<FormField
 						title="Username"
 						value={form.username}
@@ -68,8 +69,8 @@ const SignUp = () => {
 						isLoading={isSubmitting}
 					/>
 					<View className="justify-center pt-5 flex-row gap-2">
-						<Text className="text-lg text-text font-interRegular">Have an account already?</Text>
-						<Link href="/sign-in" className="text-lg font-interSemiBold text-secondary">
+						<Text className="text-xs text-text font-interRegular">Have an account already?</Text>
+						<Link href="/sign-in" className="text-xs font-interSemiBold text-secondary">
 							Sign In
 						</Link>
 					</View>
