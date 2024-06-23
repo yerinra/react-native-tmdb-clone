@@ -1,23 +1,15 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import React from "react";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import React, { useState } from "react";
 import { Octicons } from "@expo/vector-icons";
+import { router, usePathname } from "expo-router";
 
 type SearchInputProps = {
-	title: string;
-	value: string;
-	placeholder?: string;
-	handleChangeText: (text: string) => void;
-	otherStyles?: string;
-	keyboardType?: "email-address";
+	initialQuery: string;
 };
 
-const SearchInput = ({
-	title,
-	value,
-	handleChangeText,
-	placeholder,
-	...props
-}: SearchInputProps) => {
+const SearchInput = ({ initialQuery }: SearchInputProps) => {
+	const [query, setQuery] = useState(initialQuery || "");
+
 	return (
 		<View
 			className={
@@ -26,13 +18,22 @@ const SearchInput = ({
 		>
 			<TextInput
 				className="text-base mt-0.5 flex-1 text-white font-interRegular"
-				value={value}
-				placeholder={placeholder}
+				value={query}
+				placeholder="Search for a movie."
 				placeholderTextColor="#7b7b8b"
-				onChangeText={handleChangeText}
-				secureTextEntry={title === "Password"}
+				onChangeText={(e) => setQuery(e)}
 			/>
-			<TouchableOpacity>
+			<TouchableOpacity
+				onPress={() => {
+					if (query === "")
+						return Alert.alert(
+							"Missing Query",
+							"Please input something to search results across database",
+						);
+
+					router.push(`/search/${query}`);
+				}}
+			>
 				<Octicons name="search" color={"#E0E2E1"} size={22} />
 			</TouchableOpacity>
 		</View>
