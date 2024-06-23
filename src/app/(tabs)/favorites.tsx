@@ -1,18 +1,18 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useCallback } from "react";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAppSelector } from "@/redux/hooks";
+import { useFocusEffect } from "expo-router";
+import { Octicons } from "@expo/vector-icons";
+
 import useFetch from "@/hooks/useFetch";
 import { getAllUserFavorites, getAllUserRatings } from "@/lib/appwrite";
 import Empty from "@/components/Empty";
-import { useAppSelector } from "@/redux/hooks";
 import MyMovieCard from "@/components/MyMovieCard";
-import { useFocusEffect } from "expo-router";
 import Loading from "@/components/Loading";
-import { Octicons } from "@expo/vector-icons";
 import useSortAndFilter from "@/hooks/useSortAndFilter";
 import { SORT_OPTIONS } from "@/lib/constants";
-
-type SortOptions = "release_date" | "popularity" | "rating" | "updated_at" | "title";
+import { SortOptions } from "@/lib/types";
 
 const Favorites = () => {
 	const { user } = useAppSelector((state) => state.user);

@@ -169,6 +169,7 @@ export type ReviewResult = {
 	page: number;
 	results: Review[];
 };
+
 type Review = {
 	author: string;
 	author_details: {
