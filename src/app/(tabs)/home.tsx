@@ -65,42 +65,33 @@ const Home = () => {
 		return <Loading />;
 	}
 
+	const CURATED_MOVIE_OPTIONS = [
+		{ id: "popular", name: "Popular", movies: movies.popular },
+		{ id: "top_rated", name: "Top Rated", movies: movies.topRated },
+		{ id: "upcoming", name: "Upcoming", movies: movies.upcoming },
+	];
+
+	const renderItem = ({ item }: { item: { id: string; name: string; movies: Result[] } }) => (
+		<View className="w-full flex-1 pb-8 pl-4">
+			<View className="flex-row items-center mb-2 ">
+				<Text className="text-white text-lg font-interSemiBold">{item.name}</Text>
+				<Link href={`/curated/${item.id}`} className="ml-auto mr-4">
+					<Octicons name="chevron-right" color="white" size={22} />
+				</Link>
+			</View>
+			<View className="">
+				<HorizontalList type="default" movies={item.movies ?? []} />
+			</View>
+		</View>
+	);
+
 	return (
 		<SafeAreaView className="bg-primary h-full">
 			<FlatList
-				data={[
-					{ id: "popular", name: "Popular", movies: movies.popular },
-					{ id: "top_rated", name: "Top Rated", movies: movies.topRated },
-					{ id: "upcoming", name: "Upcoming", movies: movies.upcoming },
-				]}
+				data={CURATED_MOVIE_OPTIONS}
 				keyExtractor={(item) => item.id}
-				renderItem={({ item }) => (
-					<View className="w-full flex-1 pb-8 pl-4">
-						<View className="flex-row items-center mb-2 ">
-							<Text className="text-white text-lg font-interSemiBold">{item.name}</Text>
-							<Link href={`/curated/${item.id}`} className="ml-auto mr-4">
-								<Octicons name="chevron-right" color="white" size={22} />
-							</Link>
-						</View>
-						<View className="">
-							<HorizontalList type="default" movies={item.movies ?? []} />
-						</View>
-					</View>
-				)}
-				ListHeaderComponent={() => (
-					<View className="my-6 pl-4 space-y-6">
-						<View className="pr-4">
-							<Text className="font-interBlack text-5xl text-center text-secondary px-1 tracking-widest">
-								TMDB
-							</Text>
-							<SearchInput initialQuery="" />
-						</View>
-						<View>
-							<Text className="text-white text-lg font-interSemiBold mb-2">Now Playing</Text>
-							<HorizontalList type="backdrop" movies={movies.nowPlaying ?? []} />
-						</View>
-					</View>
-				)}
+				renderItem={renderItem}
+				ListHeaderComponent={() => <HomeHeader movies={movies} />}
 				ListEmptyComponent={() => (
 					<Empty title="No Movies." desc="Please try again later." showButton={false} />
 				)}
@@ -111,3 +102,27 @@ const Home = () => {
 };
 
 export default Home;
+
+type HomeHeaderProps = {
+	nowPlaying: Result[];
+	popular: Result[];
+	topRated: Result[];
+	upcoming: Result[];
+};
+
+const HomeHeader = ({ movies }: { movies: HomeHeaderProps }) => {
+	return (
+		<View className="my-6 pl-4 space-y-6">
+			<View className="pr-4">
+				<Text className="font-interBlack text-5xl text-center text-secondary px-1 tracking-widest">
+					TMDB
+				</Text>
+				<SearchInput initialQuery="" />
+			</View>
+			<View>
+				<Text className="text-white text-lg font-interSemiBold mb-2">Now Playing</Text>
+				<HorizontalList type="backdrop" movies={movies.nowPlaying ?? []} />
+			</View>
+		</View>
+	);
+};
