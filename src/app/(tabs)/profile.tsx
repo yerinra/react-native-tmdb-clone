@@ -1,4 +1,4 @@
-import { Alert, ScrollView, Text, View } from "react-native";
+import { Alert, Image, ScrollView, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import CustomButton from "@/components/CustomButton";
 import { getCurrentUser, signOut } from "@/lib/appwrite";
@@ -9,18 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const Profile = () => {
 	const dispatch = useAppDispatch();
-
-	const [userName, setUserName] = useState("");
-	const [avatar, setAvatar] = useState("");
-	useEffect(() => {
-		const getUserName = async () => {
-			const result = await getCurrentUser();
-			setUserName(result.username);
-			setAvatar(result.avatar);
-		};
-
-		getUserName();
-	}, []);
+	const { user } = useAppSelector((state) => state.user);
 
 	const handlePress = async () => {
 		try {
@@ -35,9 +24,12 @@ const Profile = () => {
 	return (
 		<SafeAreaView className="bg-primary h-full">
 			<ScrollView>
-				<View className="w-full justify-center min-h-[90vh] px-4 my-6">
-					<Text className="text-white text-lg font-interSemiBold">Profile</Text>
-					<Text>{userName}</Text>
+				<View className="w-full justify-center px-4 my-6 h-full">
+					<Text className="text-white text-3xl font-interSemiBold mb-10">Profile</Text>
+					<View className="flex-row items-center gap-x-4 mb-10">
+						<Image src={user && user.avatar} className="w-16 h-16 rounded-full" />
+						<Text className="text-white text-2xl font-interBold">{user && user.username}</Text>
+					</View>
 
 					<CustomButton title="Sign Out" handlePress={handlePress} isLoading={false}></CustomButton>
 				</View>
