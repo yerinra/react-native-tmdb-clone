@@ -1,16 +1,17 @@
 import { Text, FlatList } from "react-native";
 import React from "react";
-import { useLocalSearchParams } from "expo-router";
-import useMovieList from "@/hooks/useMovieList";
-import { ListType } from "@/lib/types";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useLocalSearchParams } from "expo-router";
+
+import useMovieList from "@/hooks/useMovieList";
+import type { ListType } from "@/lib/types";
 import MovieCard from "@/components/MovieCard";
 import Loading from "@/components/Loading";
 
 const Curated = () => {
 	const { options } = useLocalSearchParams();
-	const option = options as string;
-	const { data, loading, loadMore } = useMovieList(option as ListType);
+	const option = options as ListType;
+	const { data, loading, loadMore } = useMovieList(option);
 
 	const convertOptionName = (option: ListType) => {
 		if (option == "top_rated") return "Top Rated";
