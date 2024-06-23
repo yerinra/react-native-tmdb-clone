@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import React from "react";
 import { Octicons } from "@expo/vector-icons";
 
@@ -12,7 +12,6 @@ const Rating = ({ rating, onRatingChange, className }: RatingProps) => {
 	const handleRating = (newRating: number) => {
 		if (rating === newRating) onRatingChange(0);
 		else onRatingChange(newRating);
-		Alert.alert("Success", "평가가 저장되었습니다.");
 	};
 
 	return (

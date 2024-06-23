@@ -53,7 +53,7 @@ export const createUser = async (email: string, password: string, username: stri
 				throw new Error("비밀번호는 최소 8자 이상이어야 합니다.");
 			}
 		}
-		// console.log(error.code);
+
 		throw new Error(error);
 	}
 };
@@ -110,12 +110,15 @@ export const updateRating = async (userId: string, movie: MovieDetail, rating: n
 
 	const documentId = `${userId}-${movie.id}`; // 사용자 ID와 영화 ID를 조합하여 고유한 문서 ID 생성
 	try {
-		await databases.createDocument(
-			config.databaseId,
-			config.ratingCollectionId,
-			documentId,
-			newData,
-		);
+		if (rating == 0) {
+			await databases.deleteDocument(config.databaseId, config.ratingCollectionId, documentId);
+		} else
+			await databases.createDocument(
+				config.databaseId,
+				config.ratingCollectionId,
+				documentId,
+				newData,
+			);
 	} catch (error: any) {
 		if (error.code === 409) {
 			await databases.updateDocument(
@@ -193,5 +196,29 @@ export const getUserFavoriteForMovie = async (userId: string, movieId: number) =
 		return response.documents.length > 0 ? response.documents[0] : null;
 	} catch (error: any) {
 		console.error("Error fetching user favorite:", error);
+	}
+};
+
+export const getAllUserRatings = async (userId: string) => {
+	try {
+		const response = await databases.listDocuments(config.databaseId, config.ratingCollectionId, [
+			Query.equal("user", userId),
+		]);
+		return response.documents;
+	} catch (error: any) {
+		console.error("Error fetching user ratings:", error);
+		throw error;
+	}
+};
+
+export const getAllUserFavorites = async (userId: string) => {
+	try {
+		const response = await databases.listDocuments(config.databaseId, config.favoriteCollectionId, [
+			Query.equal("user", userId),
+		]);
+		return response.documents;
+	} catch (error: any) {
+		console.error("Error fetching user ratings:", error);
+		throw error;
 	}
 };
