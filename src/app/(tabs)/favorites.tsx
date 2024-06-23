@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAppSelector } from "@/redux/hooks";
 import { useFocusEffect } from "expo-router";
@@ -99,7 +99,7 @@ const FavoritesHeader = ({
 			<View className="flex my-6 px-4">
 				<Text className=" text-gray-100 text-2xl">My Favorites</Text>
 			</View>
-			<View className="flex-row mt-2 px-2">
+			<ScrollView className="flex-row mt-2 px-2 mr-1" horizontal>
 				{SORT_OPTIONS.map((option) => (
 					<TouchableOpacity
 						onPress={() => setSortBy(option.id as SortOptions)}
@@ -113,7 +113,7 @@ const FavoritesHeader = ({
 						</Text>
 					</TouchableOpacity>
 				))}
-			</View>
+			</ScrollView>
 			<View className="flex-row mt-1 px-2">
 				<TouchableOpacity
 					onPress={() => setShowRatedOnly((prev) => !prev)}

@@ -19,14 +19,20 @@ const Curated = () => {
 		else return "Upcoming";
 	};
 
+	const handleLoadMore = () => {
+		if (!loading) {
+			loadMore();
+		}
+	};
+
 	if (loading) return <Loading />;
 
 	return (
 		<SafeAreaView className="bg-primary h-full">
 			<FlatList
 				data={data}
-				numColumns={4}
-				contentContainerStyle={{ margin: 0, gap: 4 }}
+				numColumns={3}
+				contentContainerStyle={{ margin: 0, gap: 8, alignItems: "center" }}
 				renderItem={({ item }) => <MovieCard grid movie={item} />}
 				keyExtractor={(item, kdx) => String(item.id) + kdx}
 				ListHeaderComponent={() => (
@@ -34,7 +40,7 @@ const Curated = () => {
 						{convertOptionName(option as ListType)}
 					</Text>
 				)}
-				onEndReached={loadMore}
+				onEndReached={handleLoadMore}
 				onEndReachedThreshold={0.5}
 			/>
 		</SafeAreaView>

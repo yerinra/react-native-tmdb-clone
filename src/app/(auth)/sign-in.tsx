@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
-import { getCurrentUser, signIn } from "@/lib/appwrite";
+import { getCurrentUser, signIn, signOut } from "@/lib/appwrite";
 import { useAppDispatch } from "@/redux/hooks";
 import { clearUser, setUser } from "@/redux/slice/userSlice";
 
@@ -30,6 +30,7 @@ const SignIn = () => {
 			router.replace("/home");
 		} catch (error: any) {
 			Alert.alert("Error", error.message);
+			await signOut();
 			dispatch(clearUser());
 		} finally {
 			setIsSubmitting(false);
@@ -41,7 +42,7 @@ const SignIn = () => {
 			<ScrollView>
 				<View className="w-full justify-center min-h-[90vh] px-4 my-6">
 					<Text className="text-4xl font-interBlack text-secondary">TMDB</Text>
-					<Text className="text-2xl font-interSemiBold text-white">Sign in to your account.</Text>
+					<Text className="text-xl font-interSemiBold text-white">Sign in to your account.</Text>
 					<FormField
 						title="Email"
 						value={form.email}
@@ -65,8 +66,8 @@ const SignIn = () => {
 						isLoading={isSubmitting}
 					/>
 					<View className="justify-center pt-5 flex-row gap-2">
-						<Text className="text-lg text-text font-interRegular">Don't have account?</Text>
-						<Link href="/sign-up" className="text-lg font-interSemiBold text-secondary">
+						<Text className="text-xs text-text font-interRegular">Don't have account?</Text>
+						<Link href="/sign-up" className="text-xs font-interSemiBold text-secondary">
 							Sign Up
 						</Link>
 					</View>

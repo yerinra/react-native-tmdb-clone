@@ -26,14 +26,14 @@ const Search = () => {
 		<SafeAreaView className="bg-primary h-full">
 			<FlatList
 				data={posts}
-				numColumns={4}
-				contentContainerStyle={{ margin: 0, gap: 4 }}
+				numColumns={3}
+				contentContainerStyle={{ margin: 0, gap: 8, alignItems: "center" }}
 				keyExtractor={(item, kdx) => String(item.id) + kdx}
 				renderItem={({ item }) => <MovieCard grid movie={item} />}
 				ListHeaderComponent={() => (
-					<View className="flex my-6 px-4">
-						<Text className=" text-gray-100 text-2xl">Search Results</Text>
-						<View className="mt-3 mb-6">
+					<View className="flex my-6 px-10">
+						<Text className="text-gray-100 text-2xl">Search Results</Text>
+						<View className="mt-3 mb-2">
 							<SearchInput initialQuery={query as string} />
 						</View>
 					</View>

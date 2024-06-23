@@ -99,15 +99,16 @@ const Movie = () => {
 			<ScrollView>
 				<ImageBackground
 					resizeMode="cover"
-					className="w-full h-[280px] saturate-100"
+					className="w-full h-[280px]"
 					src={IMAGE_BASE_URL + movie.backdrop_path}
 				>
+					<View className="absolute top-0 w-full h-[350px] bg-primary/60" />
 					<View className="mt-28 mx-4">
 						<Text className="text-white text-2xl font-interBold">{movie.title}</Text>
 						<View className="flex-row gap-x-3 gap-y-2 mt-1">
 							<Image
 								src={IMAGE_BASE_URL + movie.poster_path}
-								className="w-[150px] h-52 rounded-lg overflow-hidden"
+								className="w-[130px] h-52 rounded-lg overflow-hidden"
 								resizeMode="cover"
 							/>
 
@@ -124,11 +125,11 @@ const Movie = () => {
 								</View>
 								<View className="gap-0.5">
 									<Text className="text-xs text-text font-interRegular">Status</Text>
-									<Text className="font-interMedium text-white">{movie.status}</Text>
+									<Text className="text-xs font-interMedium text-white">{movie.status}</Text>
 								</View>
 								<View className="gap-0.5">
 									<Text className="text-xs text-text font-interRegular">Revenue</Text>
-									<Text className="font-interMedium text-white">
+									<Text className="text-xs font-interMedium text-white">
 										{"$" + movie.revenue.toLocaleString()}
 									</Text>
 								</View>
@@ -137,16 +138,16 @@ const Movie = () => {
 									className={`mt-1 px-2 py-1 rounded-lg items-center ${isFavorite ? "bg-gray-600" : "bg-secondary"}`}
 									onPress={handleToggleFavorite}
 								>
-									<Text className="text-white">
-										{isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+									<Text className="text-white font-interRegular text-xs">
+										{isFavorite ? "Remove" : "Add to Favorites"}
 									</Text>
 								</TouchableOpacity>
 							</View>
 						</View>
 						<View className="my-2">
 							<View className="mb-4 gap-0.5 pt-1">
-								<Text className="text-white/70 text-xs font-interMedium">Original Title</Text>
-								<Text className="text-sm text-text">{movie.original_title}</Text>
+								<Text className="text-white/70 text-xs font-interRegular">Original Title</Text>
+								<Text className="text-xs font-interLight text-text">{movie.original_title}</Text>
 							</View>
 							<View className="mb-2 gap-y-1">
 								<Text className="text-text text-md font-interMedium">Overview</Text>
@@ -191,7 +192,6 @@ const Movie = () => {
 				</ImageBackground>
 				<View className="h-[1200px]" />
 			</ScrollView>
-			{/* <View className="absolute top-0 w-full h-[350px] bg-primary/60" /> */}
 		</SafeAreaView>
 	);
 };

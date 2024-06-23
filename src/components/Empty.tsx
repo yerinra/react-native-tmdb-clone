@@ -13,7 +13,7 @@ const Empty = ({ title, desc, showButton }: EmptyProps) => {
 	return (
 		<View className="justify-center items-center px-4 h-[75vh]">
 			<Text className="text-xl text-center font-interSemiBold text-white mt-2">{title}</Text>
-			<Text className="text-sm text-text font-interMedium">{desc}</Text>
+			<Text className="text-xs text-text font-interLight">{desc}</Text>
 			{showButton && (
 				<CustomButton
 					isLoading={false}

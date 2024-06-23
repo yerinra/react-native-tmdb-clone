@@ -27,8 +27,8 @@ const MyMovieCard = ({ movie, rating }: MyMovieCardProps) => {
 					</View>
 				)}
 
-				<View className="items-start mt-3 w-[240px]">
-					<Text className="text-start text-white font-interMedium text-lg">{movie.title}</Text>
+				<View className="items-start mt-3 max-w-[200px]">
+					<Text className="text-start text-white font-interMedium text-md">{movie.title}</Text>
 					<Text className="text-text font-interRegular text-xs mt-1">
 						{movie.release_date.split("-")[0]}
 					</Text>

@@ -74,9 +74,9 @@ const Home = () => {
 	const renderItem = ({ item }: { item: { id: string; name: string; movies: Result[] } }) => (
 		<View className="w-full flex-1 pb-8 pl-4">
 			<View className="flex-row items-center mb-2 ">
-				<Text className="text-white text-lg font-interSemiBold">{item.name}</Text>
+				<Text className="text-white text-md font-interSemiBold">{item.name}</Text>
 				<Link href={`/curated/${item.id}`} className="ml-auto mr-4">
-					<Octicons name="chevron-right" color="white" size={22} />
+					<Octicons name="chevron-right" color="white" size={20} />
 				</Link>
 			</View>
 			<View className="">
@@ -120,7 +120,7 @@ const HomeHeader = ({ movies }: { movies: HomeHeaderProps }) => {
 				<SearchInput initialQuery="" />
 			</View>
 			<View>
-				<Text className="text-white text-lg font-interSemiBold mb-2">Now Playing</Text>
+				<Text className="text-white text-md font-interSemiBold mb-2">Now Playing</Text>
 				<HorizontalList type="backdrop" movies={movies.nowPlaying ?? []} />
 			</View>
 		</View>

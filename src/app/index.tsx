@@ -19,10 +19,10 @@ export default function App() {
 					<Text className="text-5xl text-secondary font-interBlack">THE</Text>
 					<Text className="text-5xl text-secondary font-interBlack">MOVIE</Text>
 					<Text className="text-5xl text-secondary font-interBlack">DB</Text>
-					<Text className="text-white text-sm font-interRegular mt-5 text-center">
+					<Text className="text-white text-sm font-interLight mt-5 text-center">
 						Millions of movies, TV shows
 					</Text>
-					<Text className="text-white text-sm font-interRegular text-center">
+					<Text className="text-white text-sm font-interLight text-center">
 						and people to discover.
 					</Text>
 					<Text className="text-white text-lg font-interSemiBold mt-3 text-center">

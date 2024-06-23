@@ -19,14 +19,14 @@ const BackdropMovieCard = ({ movie }: BackdropMovieCardProps) => {
 				<View className="w-full flex-row flex-1  items-end rounded-lg ">
 					<Image
 						src={IMAGE_BASE_URL + movie.poster_path}
-						className="w-10 h-16 rounded-lg overflow-hidden shadow-lg m-1"
+						className="w-10 h-[66px] rounded-lg overflow-hidden shadow-lg m-1"
 						resizeMode="cover"
 					/>
 					<View className="bg-black/40 mb-1 p-1 rounded-lg">
-						<Text className="shadow-glow max-w-32 text-[11px] h-[16px] truncate text-white font-interMedium">
+						<Text className="max-w-40 text-[11px] h-[20px] text-white font-interMedium">
 							{movie.title}
 						</Text>
-						<Text className="w-34 h-10 truncate text-[9px] text-white font-interLight">
+						<Text className="w-34 h-10 text-[8px] text-white font-interLight">
 							{movie.overview}
 						</Text>
 					</View>

@@ -18,11 +18,11 @@ const SearchInput = ({ initialQuery }: SearchInputProps) => {
 	return (
 		<View
 			className={
-				"flex-row border-2 border-[#060b17] w-full h-16 px-4 bg-[#060b17] rounded-2xl focus:border-secondary items-center space-x-4 mt-4"
+				"flex-row border-2 border-[#060b17] w-[90vw] h-16 px-4 bg-[#060b17] rounded-2xl focus:border-secondary items-center space-x-4 mt-4"
 			}
 		>
 			<TextInput
-				className="text-base mt-0.5 flex-1 text-white font-interRegular"
+				className="text-sm mt-0.5 flex-1 text-white font-interLight"
 				value={query}
 				placeholder="Search for a movie."
 				placeholderTextColor="#7b7b8b"

@@ -14,7 +14,7 @@ const MovieCard = ({ movie, grid }: MovieCardProps) => {
 		<Link
 			key={movie.id}
 			href={`/movie/${movie.id}`}
-			className="mr-[6px]"
+			className="mr-[8px]"
 			onPress={() => router.push(`/movie/${movie.id}`)}
 		>
 			<View
@@ -30,7 +30,7 @@ const MovieCard = ({ movie, grid }: MovieCardProps) => {
 					<View
 						className={`${grid ? "w-[83px]" : "w-[88px]"} h-36 rounded-lg overflow-hidden border border-white`}
 					>
-						<Text className="text-white font-interExtraLight text-center">No image</Text>
+						<Text className="text-white text-xs font-interExtraLight text-center">No image</Text>
 					</View>
 				)}
 				{!grid && (
