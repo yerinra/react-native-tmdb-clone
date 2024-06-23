@@ -1,7 +1,7 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { PRIMARY_COLOR } from "@/lib/constants";
 
 const AuthLayout = () => {
 	return (
@@ -10,7 +10,7 @@ const AuthLayout = () => {
 				<Stack.Screen name="sign-in" options={{ headerShown: false }} />
 				<Stack.Screen name="sign-up" options={{ headerShown: false }} />
 			</Stack>
-			<StatusBar backgroundColor="#0b101f" style="dark" />
+			<StatusBar backgroundColor={PRIMARY_COLOR} style="dark" />
 		</>
 	);
 };

@@ -10,3 +10,7 @@ export const SORT_OPTIONS = [
 	{ id: "updated_at", label: "Added At" },
 	{ id: "title", label: "Title" },
 ];
+
+export const PRIMARY_COLOR = "#0b101f";
+export const SECONDARY_COLOR = "#8acda5";
+export const TEXT_COLOR = "#E0E2E1";
