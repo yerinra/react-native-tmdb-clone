@@ -1,7 +1,8 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import { Octicons } from "@expo/vector-icons";
+import { PRIMARY_COLOR, SECONDARY_COLOR } from "@/lib/constants";
 
 type TabIconProps = {
 	icon: keyof typeof Octicons.glyphMap;
@@ -22,10 +23,10 @@ const TabsLayout = () => {
 			<Tabs
 				screenOptions={{
 					tabBarShowLabel: false,
-					tabBarActiveTintColor: "#8acda5",
+					tabBarActiveTintColor: SECONDARY_COLOR,
 					tabBarInactiveTintColor: "#E0E2E1",
 					tabBarStyle: {
-						backgroundColor: "#0b101f",
+						backgroundColor: PRIMARY_COLOR,
 						borderTopWidth: 1,
 						borderTopColor: "#232533",
 						height: 54,
