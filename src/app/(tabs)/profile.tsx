@@ -1,10 +1,10 @@
 import { Alert, Image, ScrollView, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CustomButton from "@/components/CustomButton";
-import { getCurrentUser, signOut } from "@/lib/appwrite";
+import { signOut } from "@/lib/appwrite";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearUser } from "@/redux/slice/userSlice";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Profile = () => {
