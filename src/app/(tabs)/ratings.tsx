@@ -37,65 +37,13 @@ const Ratings = () => {
 		refetch: refetchFavorites,
 	} = useFetch(() => getAllUserFavorites(userId as string));
 
-	// const [sortBy, setSortBy] = useState<SortOptions>("release_date");
-	// const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
-
-	// const sortData = (sortBy: SortOptions, data: any[]) => {
-	// 	if (!data) return [];
-	// 	let sortedData = [...data];
-	// 	switch (sortBy) {
-	// 		case "release_date":
-	// 			sortedData.sort(
-	// 				(a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime(),
-	// 			);
-	// 			break;
-	// 		case "popularity":
-	// 			sortedData.sort((a, b) => b.popularity - a.popularity);
-	// 			break;
-	// 		case "rating":
-	// 			sortedData.sort((a, b) => b.rating - a.rating);
-	// 			break;
-	// 		case "updated_at":
-	// 			sortedData.sort(
-	// 				(a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime(),
-	// 			);
-	// 			break;
-	// 		case "title":
-	// 			sortedData.sort((a, b) => {
-	// 				if (a.title < b.title) return -1;
-	// 				if (a.title > b.title) return 1;
-	// 				return 0;
-	// 			});
-	// 			break;
-	// 		default:
-	// 			break;
-	// 	}
-
-	// 	return sortedData;
-	// };
-
-	// const filteredData = () => {
-	// 	if (!ratingsData || !favoritesData) return [];
-
-	// 	let filtered = [...ratingsData];
-
-	// 	if (showFavoritesOnly) {
-	// 		filtered = filtered.filter((item) =>
-	// 			favoritesData.some((fav) => fav.movieId === item.movieId),
-	// 		);
-	// 	}
-
-	// 	return filtered;
-	// };
-
-	// const sortedAndFilteredData = sortData(sortBy, filteredData());
 	const {
 		sortBy,
 		setSortBy,
 		showFilteredOnly: showFavoritesOnly,
 		setShowFilteredOnly: setShowFavoritesOnly,
 		sortedAndFilteredData,
-	} = useSortAndFilter(ratingsData);
+	} = useSortAndFilter(ratingsData, favoritesData);
 
 	useFocusEffect(
 		useCallback(() => {
@@ -117,13 +65,13 @@ const Ratings = () => {
 			<FlatList
 				data={sortedAndFilteredData(showFavoritesOnly ? "favorite" : null)}
 				keyExtractor={(item, kdx) => String(item.id) + kdx}
-				renderItem={({ item }) => <MyMovieCard movie={item} />}
+				renderItem={({ item }) => <MyMovieCard movie={item} rating />}
 				ListHeaderComponent={() => (
 					<>
 						<View className="flex my-6 px-4">
 							<Text className=" text-gray-100 text-2xl">My Ratings</Text>
 						</View>
-						<View className="flex-row mt-2 px-4">
+						<View className="flex-row mt-2 px-2">
 							{SORT_OPTIONS.map((option) => (
 								<TouchableOpacity
 									onPress={() => setSortBy(option.id as SortOptions)}
@@ -138,10 +86,10 @@ const Ratings = () => {
 								</TouchableOpacity>
 							))}
 						</View>
-						<View className="flex-row mt-1 px-4">
+						<View className="flex-row mt-1 px-2">
 							<TouchableOpacity
 								onPress={() => setShowFavoritesOnly((prev) => !prev)}
-								className="flex-row items-center px-2 py-1 mb-10 mt-1"
+								className="flex-row items-center px-2 py-1 mb-6 mt-1"
 							>
 								<Text
 									className={`${showFavoritesOnly ? "text-secondary" : "text-text"} text-xs mr-1`}

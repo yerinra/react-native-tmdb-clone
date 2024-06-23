@@ -30,7 +30,7 @@ const Movie = () => {
 		loading,
 		refetch,
 	} = useFetch<MovieDetail>(() => getMovieDetail(numericMovieId as number));
-
+	const [ratingAndFavoriteLoading, setRatingAndFavoriteLoading] = useState(true);
 	useEffect(() => {
 		const fetchUserRatingAndFavorite = async () => {
 			try {
@@ -44,10 +44,13 @@ const Movie = () => {
 				}
 
 				// Fetch user favorite
+				setRatingAndFavoriteLoading(true);
 				const userFavorite = await getUserFavoriteForMovie(userId, numericMovieId as number);
 				setIsFavorite(!!userFavorite);
 			} catch (error) {
 				console.error("Error fetching user data:", error);
+			} finally {
+				setRatingAndFavoriteLoading(false);
 			}
 		};
 
@@ -58,7 +61,7 @@ const Movie = () => {
 
 	const [rating, setRating] = useState(0);
 
-	if (loading) return <Loading />;
+	if (loading && ratingAndFavoriteLoading) return <Loading />;
 	if (!movie) return <Empty title="No Movie Found." desc="Please try again." showButton />;
 
 	const handleRatingChange = async (newRating: number) => {

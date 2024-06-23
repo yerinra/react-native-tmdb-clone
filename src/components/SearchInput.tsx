@@ -1,5 +1,5 @@
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
-import React, { useState } from "react";
+import { View, TextInput, TouchableOpacity, Alert } from "react-native";
+import React, { useEffect, useState } from "react";
 import { Octicons } from "@expo/vector-icons";
 import { router, usePathname } from "expo-router";
 
@@ -9,6 +9,11 @@ type SearchInputProps = {
 
 const SearchInput = ({ initialQuery }: SearchInputProps) => {
 	const [query, setQuery] = useState(initialQuery || "");
+	const pathname = usePathname();
+
+	useEffect(() => {
+		if (pathname == "/home") setQuery("");
+	}, [pathname]);
 
 	return (
 		<View

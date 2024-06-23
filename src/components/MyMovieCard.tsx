@@ -9,9 +9,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 type MyMovieCardProps = {
 	movie: Models.Document;
+	rating: boolean;
 };
 
-const MyMovieCard = ({ movie }: MyMovieCardProps) => {
+const MyMovieCard = ({ movie, rating }: MyMovieCardProps) => {
 	return (
 		<Link href={`/movie/${movie.movieId}`} className="">
 			<View className="flex-row justify-center rounded-lg gap-x-3 gap-y-5 max-w-[90vh]">
@@ -32,12 +33,15 @@ const MyMovieCard = ({ movie }: MyMovieCardProps) => {
 					<Text className="text-text font-interRegular text-xs mt-1">
 						{movie.release_date.split("-")[0]}
 					</Text>
-					<View className="flex-row justify-center gap-x-2 mt-5">
-						<Octicons name="star-fill" color="#8acda5" size={18} />
-						<Text className="text-secondary font-interSemiBold text-xs">
-							{movie.rating.toFixed(1)}
-						</Text>
-					</View>
+					{rating && (
+						<View className="flex-row justify-center gap-x-2 mt-5">
+							<Octicons name="star-fill" color="#8acda5" size={18} />
+
+							<Text className="text-secondary font-interSemiBold text-xs">
+								{movie.rating.toFixed(1)}
+							</Text>
+						</View>
+					)}
 				</View>
 			</View>
 		</Link>

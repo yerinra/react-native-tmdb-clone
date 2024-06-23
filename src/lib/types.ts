@@ -185,3 +185,4 @@ type Review = {
 };
 
 export type User = Models.Document | undefined | null;
+export type SortOptions = "release_date" | "popularity" | "rating" | "updated_at" | "title";
