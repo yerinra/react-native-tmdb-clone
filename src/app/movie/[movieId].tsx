@@ -11,12 +11,13 @@ import { MovieDetail } from "@/lib/types";
 import { useAppSelector } from "@/redux/hooks";
 import {
 	addFavorite,
-	getCurrentUser,
 	getUserFavoriteForMovie,
 	getUserRatingForMovie,
 	removeFavorite,
 	updateRating,
 } from "@/lib/appwrite";
+import Loading from "@/components/Loading";
+import Empty from "@/components/Empty";
 
 const Movie = () => {
 	const { movieId } = useLocalSearchParams();
@@ -54,11 +55,11 @@ const Movie = () => {
 			fetchUserRatingAndFavorite();
 		}
 	}, [numericMovieId]);
-	console.log("hi");
+
 	const [rating, setRating] = useState(0);
 
-	if (loading) return <Text>Loading...</Text>;
-	if (!movie) return <Text>There is no movie of {movieId}</Text>;
+	if (loading) return <Loading />;
+	if (!movie) return <Empty title="No Movie Found." desc="Please try again." showButton />;
 
 	const handleRatingChange = async (newRating: number) => {
 		try {

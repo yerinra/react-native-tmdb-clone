@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearUser, setUser } from "@/redux/slice/userSlice";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
+import Loading from "./Loading";
 
 export const Protected = ({ children }: { children: React.ReactNode }) => {
 	const [loading, setLoading] = useState(true);
@@ -25,7 +26,7 @@ export const Protected = ({ children }: { children: React.ReactNode }) => {
 			.finally(() => setLoading(false));
 	}, []);
 
-	return <View>{loading ? <Text>loading...</Text> : children}</View>;
+	return <View>{loading ? <Loading /> : children}</View>;
 };
 
 export default Protected;
