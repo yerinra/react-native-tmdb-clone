@@ -23,7 +23,7 @@ const SignUp = () => {
 		try {
 			const result = await createUser(form.email, form.password, form.username);
 
-			dispatch(setUser(result));
+			// dispatch(setUser(result.$id));
 			router.replace("/home");
 		} catch (error: any) {
 			Alert.alert("Error", error.message);

@@ -79,14 +79,16 @@ export const signOut = async () => {
 export const getCurrentUser = async () => {
 	try {
 		const currentAccount = await account.get();
-
-		if (!currentAccount) throw Error;
+		if (!currentAccount) throw new Error("해당하는 유저가 없습니다.");
 
 		const currentUser = await databases.listDocuments(config.databaseId, config.userCollectionId, [
 			Query.equal("accountId", currentAccount.$id),
 		]);
 
-		if (!currentUser) throw new Error("해당하는 유저가 없습니다.");
+		if (!currentUser || currentUser.documents.length === 0) {
+			return null;
+		}
+
 		return currentUser.documents[0];
 	} catch (error: any) {
 		throw new Error(error);

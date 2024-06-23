@@ -8,7 +8,7 @@ import Rating from "@/components/Rating";
 import useFetch from "@/hooks/useFetch";
 import { getMovieDetail } from "@/lib/tmdb";
 import { MovieDetail } from "@/lib/types";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppSelector } from "@/redux/hooks";
 import {
 	addFavorite,
 	getCurrentUser,
@@ -22,6 +22,7 @@ const Movie = () => {
 	const { movieId } = useLocalSearchParams();
 	const numericMovieId = typeof movieId === "string" ? parseInt(movieId, 10) : undefined;
 	const [isFavorite, setIsFavorite] = useState(false);
+	const { user } = useAppSelector((state) => state.user);
 
 	const {
 		data: movie,
@@ -32,7 +33,7 @@ const Movie = () => {
 	useEffect(() => {
 		const fetchUserRatingAndFavorite = async () => {
 			try {
-				const user = await getCurrentUser();
+				if (!user) return; // Handle case where user is null
 				const userId = user.$id;
 
 				// Fetch user rating
@@ -43,11 +44,7 @@ const Movie = () => {
 
 				// Fetch user favorite
 				const userFavorite = await getUserFavoriteForMovie(userId, numericMovieId as number);
-				if (userFavorite) {
-					setIsFavorite(true);
-				} else {
-					setIsFavorite(false);
-				}
+				setIsFavorite(!!userFavorite);
 			} catch (error) {
 				console.error("Error fetching user data:", error);
 			}
@@ -57,7 +54,7 @@ const Movie = () => {
 			fetchUserRatingAndFavorite();
 		}
 	}, [numericMovieId]);
-
+	console.log("hi");
 	const [rating, setRating] = useState(0);
 
 	if (loading) return <Text>Loading...</Text>;
@@ -65,9 +62,8 @@ const Movie = () => {
 
 	const handleRatingChange = async (newRating: number) => {
 		try {
-			const user = await getCurrentUser();
-			console.log("User object:", user); // 로그 추가
-			const userId = user.$id; // user.$id를 사용
+			if (!user) return;
+			const userId = user.$id;
 			setRating(newRating);
 			await updateRating(userId, movie, newRating);
 		} catch (error: any) {
@@ -77,7 +73,7 @@ const Movie = () => {
 
 	const handleToggleFavorite = async () => {
 		try {
-			const user = await getCurrentUser();
+			if (!user) return;
 			const userId = user.$id;
 
 			if (isFavorite) {

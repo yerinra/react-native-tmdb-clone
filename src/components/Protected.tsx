@@ -1,9 +1,9 @@
 import { getCurrentUser } from "@/lib/appwrite";
+import { User } from "@/lib/types";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearUser, setUser } from "@/redux/slice/userSlice";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { Models } from "react-native-appwrite";
 
 export const Protected = ({ children }: { children: React.ReactNode }) => {
 	const [loading, setLoading] = useState(true);
@@ -12,7 +12,7 @@ export const Protected = ({ children }: { children: React.ReactNode }) => {
 
 	useEffect(() => {
 		getCurrentUser()
-			.then((res: Models.Document | undefined) => {
+			.then((res: User) => {
 				if (res) {
 					dispatch(setUser(res));
 				} else {

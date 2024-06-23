@@ -24,8 +24,7 @@ const SignIn = () => {
 			await signIn(form.email, form.password);
 			const result = await getCurrentUser();
 			if (!result) throw Error;
-			dispatch(setUser(result.$id));
-			console.log(result);
+			dispatch(setUser(result));
 
 			router.replace("/home");
 		} catch (error: any) {

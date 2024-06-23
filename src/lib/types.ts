@@ -1,3 +1,4 @@
+import { Models } from "react-native-appwrite";
 export type ListType = "popular" | "now_playing" | "top_rated" | "upcoming";
 
 export type Result = {
@@ -23,6 +24,7 @@ export type MovieListResponse = {
 	results: Result[];
 	page: number;
 };
+
 type Genre = {
 	id: number;
 	name: string;
@@ -181,3 +183,5 @@ type Review = {
 	updated_at: string;
 	url: string;
 };
+
+export type User = Models.Document | undefined | null;

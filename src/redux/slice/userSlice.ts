@@ -1,10 +1,9 @@
+import { User } from "@/lib/types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Models } from "react-native-appwrite";
 
-type User = Models.Document | null;
 type UserState = {
 	isLoggedIn: boolean;
-	user: string | null;
+	user: User;
 };
 
 const initialState: UserState = {
@@ -16,7 +15,7 @@ const userSlice = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
-		setUser: (state, action: PayloadAction<string>) => {
+		setUser: (state, action: PayloadAction<User>) => {
 			state.user = action.payload;
 			state.isLoggedIn = true;
 		},
