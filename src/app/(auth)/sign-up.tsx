@@ -6,7 +6,7 @@ import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import { createUser } from "@/lib/appwrite";
 import { useAppDispatch } from "@/redux/hooks";
-import { clearUser, setUser } from "@/redux/slice/userSlice";
+import { clearUser } from "@/redux/slice/userSlice";
 
 const SignUp = () => {
 	const dispatch = useAppDispatch();
@@ -14,16 +14,15 @@ const SignUp = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const submit = async () => {
-		if (form.username == "" || form.email == "" || form.password == "") {
+		if (form.username.trim() == "" || form.email.trim() == "" || form.password == "") {
 			Alert.alert("Error", "There was an error processing your signup");
 		}
 
 		setIsSubmitting(true);
 
 		try {
-			const result = await createUser(form.email, form.password, form.username);
+			await createUser(form.email, form.password, form.username);
 
-			// dispatch(setUser(result.$id));
 			router.replace("/home");
 		} catch (error: any) {
 			Alert.alert("Error", error.message);

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, AppState, Alert } from "react-native";
+import { View, Text, ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "@/components/FormField";
@@ -14,7 +14,7 @@ const SignIn = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const submit = async () => {
-		if (form.email == "" || form.password == "") {
+		if (form.email.trim() == "" || form.password == "") {
 			Alert.alert("Error", "There was an error processing your signup");
 		}
 
@@ -23,6 +23,7 @@ const SignIn = () => {
 		try {
 			await signIn(form.email, form.password);
 			const result = await getCurrentUser();
+
 			if (!result) throw Error;
 			dispatch(setUser(result));
 
