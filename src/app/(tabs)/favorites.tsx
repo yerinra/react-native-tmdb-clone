@@ -60,41 +60,12 @@ const Favorites = () => {
 				keyExtractor={(item, kdx) => String(item.id) + kdx}
 				renderItem={({ item }) => <MyMovieCard movie={item} rating={false} />}
 				ListHeaderComponent={() => (
-					<>
-						<View className="flex my-6 px-4">
-							<Text className=" text-gray-100 text-2xl">My Favorites</Text>
-						</View>
-						<View className="flex-row mt-2 px-2">
-							{SORT_OPTIONS.map((option) => (
-								<TouchableOpacity
-									onPress={() => setSortBy(option.id as SortOptions)}
-									className="px-2 py-1"
-									key={option.id}
-								>
-									<Text
-										className={`${option.id === sortBy ? "text-secondary underline" : "text-text"} text-xs`}
-									>
-										{option.label}
-									</Text>
-								</TouchableOpacity>
-							))}
-						</View>
-						<View className="flex-row mt-1 px-2">
-							<TouchableOpacity
-								onPress={() => setShowRatedOnly((prev) => !prev)}
-								className="flex-row items-center px-2 py-1 mb-6 mt-1"
-							>
-								<Text className={`${showRatedOnly ? "text-secondary" : "text-text"} text-xs mr-1`}>
-									Show Rated Only
-								</Text>
-								<Octicons
-									name="check"
-									size={12}
-									color={`${showRatedOnly ? "#8acda5" : "#0b101f"}`}
-								/>
-							</TouchableOpacity>
-						</View>
-					</>
+					<FavoritesHeader
+						sortBy={sortBy}
+						setSortBy={setSortBy}
+						showRatedOnly={showRatedOnly}
+						setShowRatedOnly={setShowRatedOnly}
+					/>
 				)}
 				ListEmptyComponent={() => (
 					<Empty
@@ -109,3 +80,51 @@ const Favorites = () => {
 };
 
 export default Favorites;
+
+type FavoritesHeaderProps = {
+	sortBy: SortOptions;
+	setSortBy: React.Dispatch<React.SetStateAction<SortOptions>>;
+	showRatedOnly: boolean;
+	setShowRatedOnly: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const FavoritesHeader = ({
+	sortBy,
+	setSortBy,
+	showRatedOnly,
+	setShowRatedOnly,
+}: FavoritesHeaderProps) => {
+	return (
+		<>
+			<View className="flex my-6 px-4">
+				<Text className=" text-gray-100 text-2xl">My Favorites</Text>
+			</View>
+			<View className="flex-row mt-2 px-2">
+				{SORT_OPTIONS.map((option) => (
+					<TouchableOpacity
+						onPress={() => setSortBy(option.id as SortOptions)}
+						className="px-2 py-1"
+						key={option.id}
+					>
+						<Text
+							className={`${option.id === sortBy ? "text-secondary underline" : "text-text"} text-xs`}
+						>
+							{option.label}
+						</Text>
+					</TouchableOpacity>
+				))}
+			</View>
+			<View className="flex-row mt-1 px-2">
+				<TouchableOpacity
+					onPress={() => setShowRatedOnly((prev) => !prev)}
+					className="flex-row items-center px-2 py-1 mb-6 mt-1"
+				>
+					<Text className={`${showRatedOnly ? "text-secondary" : "text-text"} text-xs mr-1`}>
+						Show Rated Only
+					</Text>
+					<Octicons name="check" size={12} color={`${showRatedOnly ? "#8acda5" : "#0b101f"}`} />
+				</TouchableOpacity>
+			</View>
+		</>
+	);
+};
