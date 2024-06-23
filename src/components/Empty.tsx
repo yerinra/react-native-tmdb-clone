@@ -17,7 +17,7 @@ const Empty = ({ title, desc, showButton }: EmptyProps) => {
 			{showButton && (
 				<CustomButton
 					isLoading={false}
-					title="Search Again"
+					title="Explore Movies"
 					handlePress={() => router.push("/home")}
 					containerStyles="w-full my-5 mt-10"
 				/>
