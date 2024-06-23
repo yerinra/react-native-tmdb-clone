@@ -3,8 +3,7 @@ import { useLocalSearchParams } from "expo-router";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Empty from "@/components/Empty";
-import useMovieList from "@/hooks/useMovieList";
-import { searchByKeyword } from "@/lib/tmdb";
+
 import useSearchResult from "@/hooks/useSearchResult";
 import SearchInput from "@/components/SearchInput";
 import MovieCard from "@/components/MovieCard";
@@ -30,7 +29,7 @@ const Search = () => {
 				numColumns={4}
 				contentContainerStyle={{ margin: 0, gap: 4 }}
 				keyExtractor={(item, kdx) => String(item.id) + kdx}
-				renderItem={({ item }) => <MovieCard search movie={item} />}
+				renderItem={({ item }) => <MovieCard grid movie={item} />}
 				ListHeaderComponent={() => (
 					<>
 						<View className="flex my-6 px-4">
