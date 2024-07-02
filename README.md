@@ -1,5 +1,5 @@
 # TMDB
-[The Movie Database](https://www.themoviedb.org) 클론 코딩 과제
+[The Movie Database](https://www.themoviedb.org) 클론 코딩
 <br><br/>
 ## 설치 및 실행
 ```
